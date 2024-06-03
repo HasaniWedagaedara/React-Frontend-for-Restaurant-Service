@@ -12,7 +12,6 @@ function App() {
 
   const [addSection, setAddSection] = useState(false);
   const [editSection, setEditSection] = useState(false);
-
   const [formData, setFormData] = useState({
     name: "",
     address: "",
@@ -33,68 +32,66 @@ function App() {
         ...preve,
         [name]: value
       }
-    })
-  }
+    });
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try{
-    const response = await axios.post("/create", formData);
-    const data = response.data;
-    console.log(data);
+    try {
+      const response = await axios.post("/create", formData);
+      const data = response.data;
+      sessionStorage.setItem("errors", JSON.stringify(data.errors));
+      console.log(data);
 
-    if (data.success) {
-      setAddSection(false);
-      alert(data.message);
-      getFetchData();
-      setFormData({
-        name: "",
-        address: "",
-        telephone: "",
-      });
-      setErrors({});
-    } else {
-      setErrors(data.errors.reduce((acc, curr) => {
-        acc[curr.param] = curr.msg;
-        return acc;
-      }, {}));
-    }
+      if (data.success) {
+        setAddSection(false);
+        alert(data.message);
+        getFetchData();
+        setFormData({
+          name: "",
+          address: "",
+          telephone: "",
+        });
+        setErrors({});
+      } else {
+        setErrors(data.errors.reduce((acc, curr) => {
+          acc[curr.param] = curr.msg;
+          return acc;
+        }, {}));
+      }
     } catch (error) {
       console.error("An error occurred:", error);
     }
-    }
-  
+  };
 
-  const [dataList, setDataList] = useState([])
+  const [dataList, setDataList] = useState([]);
   const getFetchData = async () => {
-    const data = await axios.get("/")
-    console.log(data)
+    const data = await axios.get("/");
+    console.log(data);
     if (data.data.success) {
-      setDataList(data.data.data)
+      setDataList(data.data.data);
     }
   }
   useEffect(() => {
-    getFetchData()
+    getFetchData();
   }, [])
 
-  console.log(dataList)
+  console.log(dataList);
 
   const handleDelete = async (id) => {
-    const data = await axios.delete("/delete/" + id)
+    const data = await axios.delete("/delete/" + id);
 
     if (data.data.success) {
-      getFetchData()
-      alert(data.data.message)
+      getFetchData();
+      alert(data.data.message);
     }
   }
 
   const handleUpdate = async (e) => {
-    e.preventDefault()
     const data = await axios.put("/update", formDataEdit)
     if (data.data.success) {
-      getFetchData()
-      alert(data.data.message)
-      setEditSection(false)
+      getFetchData();
+      alert(data.data.message);
+      setEditSection(false);
     }
   }
   const handleEditOnChange = async (e) => {
@@ -107,10 +104,9 @@ function App() {
     })
   }
 
-
   const handleEdit = (el) => {
-    setFormDataEdit(el)
-    setEditSection(true)
+    setFormDataEdit(el);
+    setEditSection(true);
   }
 
 
@@ -127,7 +123,7 @@ function App() {
           Add New Restuarant
         </button>
 
-        
+
       </div>
 
 
