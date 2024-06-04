@@ -72,6 +72,7 @@ const Form = ({ handleSubmit, handleOnChange, handleClose, rest }) => {
           type="text"
           id="name"
           name="name"
+          placeholder="  Restuarant Name"
           onChange={handleName}
           value={name}
         />
@@ -82,6 +83,7 @@ const Form = ({ handleSubmit, handleOnChange, handleClose, rest }) => {
           type="text"
           id="address"
           name="address"
+          placeholder="  Address of the Restuarant"
           onChange={handleAddress}
           value={address}
         />
@@ -92,6 +94,7 @@ const Form = ({ handleSubmit, handleOnChange, handleClose, rest }) => {
           type="text"
           id="telephone"
           name="telephone"
+          placeholder="  Telephone Number"
           onChange={handleTelephone}
           value={telephone}
         />
